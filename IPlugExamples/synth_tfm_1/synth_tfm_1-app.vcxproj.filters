@@ -10,6 +10,12 @@
     <Filter Include="app\ASIO_SDK">
       <UniqueIdentifier>{b91b9db4-5584-4959-a395-7394ba3cf5a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2e30dcd3-bab5-43b3-813d-c2573c5a1a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{9fc5cd7a-7766-4a31-8f9f-b79adec86d5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtAudio.h">
@@ -43,12 +49,19 @@
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="synth_tfm_1.h" />
     <ClInclude Include="..\..\WDL\IPlug\IPlugStandalone.h">
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="app_wrapper\app_resource.h" />
-    <ClInclude Include="Oscillator.h" />
+    <ClInclude Include="Oscillator.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="synth_tfm_1.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MIDIReceiver.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -72,11 +85,18 @@
     <ClCompile Include="app_wrapper\app_main.cpp">
       <Filter>app</Filter>
     </ClCompile>
-    <ClCompile Include="synth_tfm_1.cpp" />
     <ClCompile Include="..\..\WDL\IPlug\IPlugStandalone.cpp">
       <Filter>app</Filter>
     </ClCompile>
-    <ClCompile Include="Oscillator.cpp" />
+    <ClCompile Include="Oscillator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="synth_tfm_1.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MIDIReceiver.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="synth_tfm_1.rc" />

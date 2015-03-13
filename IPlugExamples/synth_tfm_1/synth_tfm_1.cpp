@@ -10,7 +10,6 @@ const int kNumPrograms = 5;
 
 enum EParams
 {
-  kFrequency = 0,
   kNumParams
 };
 
@@ -18,10 +17,6 @@ enum ELayout
 {
   kWidth = GUI_WIDTH,
   kHeight = GUI_HEIGHT,
-
-  kFrequencyX = 96,
-  kFrequencyY = 96,
-  kKnobFrames = 128
 };
 
 synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
@@ -29,30 +24,24 @@ synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
 {
 	TRACE;
 
-	//arguments are: name, defaultVal, minVal, maxVal, step, label
-	GetParam(kFrequency)->InitDouble("Frequency", 440.0, 50.0, 20000.0, 0.01, "Hz");
-	GetParam(kFrequency)->SetShape(2.0);
-
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
-	// pGraphics->AttachPanelBackground(&COLOR_RED);
 	pGraphics->AttachPanelBackground(&COLOR_BLACK);
-
-	IBitmap knob = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, kKnobFrames);
-
-	pGraphics->AttachControl(new IKnobMultiControl(this, kFrequencyX, kFrequencyY, kFrequency, &knob));
-
 	AttachGraphics(pGraphics);
-
-	//MakePreset("preset 1", ... );
 	CreatePresets();
 }
 
 synth_tfm_1::~synth_tfm_1() {}
 
 void synth_tfm_1::CreatePresets() {
-	MakePreset("clean", 440.0);
+	MakeDefaultPreset((char *)  "-", kNumParams);
 }
 
+/**
+*	This is where the actual processing is done.
+*	@param	inputs input buffer for processing (not used for a synth, no incoming audio)
+*	@param	outputs output buffer for processing
+*	@param	nFrames number of frames to process
+*/
 
 void synth_tfm_1::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
 {
@@ -61,17 +50,27 @@ void synth_tfm_1::ProcessDoubleReplacing(double** inputs, double** outputs, int 
 	double *left_output = outputs[0];
 	double *right_output = outputs[1];
 
-	mOscillator.generate(left_output, nFrames);
-	//mOscillator.generate(right_output, nFrames);
-
-	
-	// Copy left buffer into right buffer:
-	// faster than generating all samples
-	for (int s = 0; s < nFrames; ++s) {
-		right_output[s] = left_output[s];
+	for (size_t i = 0; i < nFrames; i++)
+	{
+		mMIDIReceiver.advance();
+		int velocity = mMIDIReceiver.getLastVelocity();
+		if (velocity > 0){
+			mOscillator.set_freq(mMIDIReceiver.getLastFrequency());
+			mOscillator.set_muted(false);
+		}
+		else {
+			mOscillator.set_muted(true);
+		}
+		left_output[i] = right_output[i] = mOscillator.nextSample() * velocity / 127.0;
 	}
+
+	mMIDIReceiver.Flush(nFrames);
 	
 }
+
+/**
+*	Called when the sample rate changes.
+*/
 
 void synth_tfm_1::Reset()
 {
@@ -80,18 +79,23 @@ void synth_tfm_1::Reset()
   mOscillator.set_samp_rate(GetSampleRate()); // GetSampleRate inherited from IPlugBase class
 }
 
+/**
+*	Called whenever an element of the GUI / MIDI changes
+*	@param	paramIdx ID of the element that changed.
+*/
+
 void synth_tfm_1::OnParamChange(int paramIdx)
 {
 	IMutexLock lock(this);
 
-	switch (paramIdx)
-	{
-	case kFrequency:
-		mOscillator.set_freq(GetParam(kFrequency)->Value());
-		break;
+}
 
-	default:
-		break;
-	}
+/**
+*	Called whenever a MIDI message is received.
+*	@param	pMsg MIDI message received
+*/
+
+void synth_tfm_1::ProcessMidiMsg(IMidiMsg* pMsg){
+	mMIDIReceiver.onMessageReceived(pMsg);
 }
 
