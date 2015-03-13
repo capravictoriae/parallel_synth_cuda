@@ -235,11 +235,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\WDL\IPlug\IPlugVST.h" />
+    <ClInclude Include="Oscillator.h" />
     <ClInclude Include="synth_tfm_1.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\IPlug\IPlugVST.cpp" />
+    <ClCompile Include="Oscillator.cpp" />
     <ClCompile Include="synth_tfm_1.cpp" />
   </ItemGroup>
   <ItemGroup>

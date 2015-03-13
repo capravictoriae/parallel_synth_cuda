@@ -276,6 +276,7 @@
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtMidi.h" />
     <ClInclude Include="app_wrapper\app_main.h" />
     <ClInclude Include="app_wrapper\app_resource.h" />
+    <ClInclude Include="Oscillator.h" />
     <ClInclude Include="synth_tfm_1.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -288,6 +289,7 @@
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtMidi.cpp" />
     <ClCompile Include="app_wrapper\app_dialog.cpp" />
     <ClCompile Include="app_wrapper\app_main.cpp" />
+    <ClCompile Include="Oscillator.cpp" />
     <ClCompile Include="synth_tfm_1.cpp" />
   </ItemGroup>
   <ItemGroup>
