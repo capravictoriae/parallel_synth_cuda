@@ -41,35 +41,11 @@ public:
 			}
 	};
 
-	/**
-	*	Getter. 
-	*	@param	keyIndex Indicates the key to look.
-	*	@return Returns true if the key with a given index is currently pressed
-	*/
+
 	inline bool getKeyStatus(int keyIndex) const { return mr_key_status[keyIndex]; }
-
-	/**
-	*	Getter. 
-	*	@return Returns the number of keys currently pressed
-	*/
 	inline int getNumKeys() const { return mr_num_keys; }
-
-	/**
-	*	Getter.
-	*	@return Returns the last pressed note number
-	*/
 	inline int getLastNoteNumber() const { return mr_last_note_number; }
-
-	/**
-	*	Getter.
-	*	@return Returns the last frequency note 
-	*/
 	inline double getLastFrequency() const { return mr_last_freq; }
-
-	/**
-	*	Getter.
-	*	@return Returns the last velocity pressed note
-	*/
 	inline int getLastVelocity() const { return mr_last_vel; }
 
 	void advance();

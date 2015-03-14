@@ -1,6 +1,25 @@
 #include "Oscillator.h"
 
 /**
+*	Setters
+*	TODO
+*/
+
+void Oscillator::set_mode(Oscillator_mode mode) {
+	osc_mode = mode;
+}
+
+void Oscillator::set_freq(double freq) {
+	osc_freq = freq;
+	update_increment();
+}
+
+void Oscillator::set_samp_rate(double samp_rate) {
+	osc_samp_rate = samp_rate;
+	update_increment();
+}
+
+/**
 *	Update for the new phase increment introduced. Update every time
 *	the frequency or sample rate is updated.
 */
@@ -38,9 +57,6 @@ double Oscillator::nextSample(){
 	case OSCILLATOR_MODE_TRIANGLE:
 		value = -1.0 + (2.0 * osc_phase / osc_two_pi);
 		value = 2.0 * (fabs(value) - 0.5);
-		break;
-	default:
-		// TODO
 		break;
 	}
 

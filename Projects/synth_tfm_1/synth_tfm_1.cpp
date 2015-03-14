@@ -20,7 +20,7 @@ enum ELayout
 };
 
 synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
-	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo), mFrequency(1.)
+	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
 {
 	TRACE;
 
@@ -45,7 +45,7 @@ void synth_tfm_1::CreatePresets() {
 
 void synth_tfm_1::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
 {
-  // Mutex is already locked for us.
+  // Mutex is already locked for us.	
 
 	double *left_output = outputs[0];
 	double *right_output = outputs[1];
@@ -98,4 +98,3 @@ void synth_tfm_1::OnParamChange(int paramIdx)
 void synth_tfm_1::ProcessMidiMsg(IMidiMsg* pMsg){
 	mMIDIReceiver.onMessageReceived(pMsg);
 }
-

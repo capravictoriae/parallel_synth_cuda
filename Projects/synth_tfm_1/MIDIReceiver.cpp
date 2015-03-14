@@ -20,14 +20,10 @@ void MIDIReceiver::onMessageReceived(IMidiMsg* midiMessage) {
 *	using the offset that maintains synchronization
 */
 
-void MIDIReceiver::advance(){
-
+void MIDIReceiver::advance() {
 	while (!mr_midi_queue.Empty()) {
 		IMidiMsg* midiMessage = mr_midi_queue.Peek();
-		if (midiMessage->mOffset > mr_offset)
-		{
-			break;
-		}
+		if (midiMessage->mOffset > mr_offset) break;
 
 		IMidiMsg::EStatusMsg status = midiMessage->StatusMsg();
 		int noteNumber = midiMessage->NoteNumber();
@@ -60,5 +56,4 @@ void MIDIReceiver::advance(){
 		mr_midi_queue.Remove();
 	}
 	mr_offset++;
-
 }
