@@ -22,6 +22,10 @@ enum ELayout
   kKeybY = 0
 };
 
+/**
+*	Main constructor with all graphic elements.
+*/
+
 synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo), lastVirtualKeyboardNoteNumber(virtualKeyboardMinimumNoteNumber - 1)
 {
@@ -36,15 +40,19 @@ synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
 
 	//                            C#     D#          F#      G#      A#
 	int keyCoordinates[12] = { 0, 7, 12, 20, 24, 36, 43, 48, 56, 60, 69, 72 };
-	/*
-	*	No destructor needed. Memory ownership of IKeyboardControl goes to graphics system and it manage it.
-	*/
+	// No destructor needed. Memory ownership of IKeyboardControl goes to graphics system and it manage it.
+
 	mVirtualKeyboard = new IKeyboardControl(this, kKeybX, kKeybY, virtualKeyboardMinimumNoteNumber, /* octaves: */ 5, &whiteKeyBitmap, &blackKeyBitmap, keyCoordinates);
 
 	pGraphics->AttachControl(mVirtualKeyboard);
 
 	AttachGraphics(pGraphics);
 	CreatePresets();
+
+	// connect midi receiver with envelopes 
+
+	mMIDIReceiver.noteOn.Connect(this, &synth_tfm_1::onNoteOn);
+	mMIDIReceiver.noteOff.Connect(this, &synth_tfm_1::onNoteOff);
 }
 
 synth_tfm_1::~synth_tfm_1() {}
@@ -80,7 +88,7 @@ void synth_tfm_1::ProcessDoubleReplacing(double** inputs, double** outputs, int 
 		else {
 			mOscillator.set_muted(true);
 		}
-		left_output[i] = right_output[i] = mOscillator.nextSample() * velocity / 127.0;
+		left_output[i] = right_output[i] = mOscillator.nextSample() * mEnvelope.nextSample() * velocity / 127.0;
 	}
 
 	mMIDIReceiver.Flush(nFrames);
@@ -96,6 +104,7 @@ void synth_tfm_1::Reset()
   TRACE;
   IMutexLock lock(this);
   mOscillator.set_samp_rate(GetSampleRate()); // GetSampleRate inherited from IPlugBase class
+  mEnvelope.setSampleRate(GetSampleRate());
 }
 
 /**

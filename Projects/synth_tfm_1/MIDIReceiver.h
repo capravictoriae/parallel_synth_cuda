@@ -3,6 +3,9 @@
 
 #include "IPlug_include_in_plug_hdr.h"
 #include "IMidiQueue.h"
+#include "GallantSignal.h"
+
+using Gallant::Signal2;
 
 /**
 *	MIDIReceiver class used for handling incoming midi messages.
@@ -29,6 +32,11 @@ private:
 		return 440.0 * pow(2.0, (note_num - 69.0) / 12.0);
 	}
 public:
+
+	Signal2<int, int> noteOn;
+	Signal2<int, int> noteOff;
+
+
 	MIDIReceiver() :
 		mr_num_keys(0),
 		mr_last_note_number(-1),

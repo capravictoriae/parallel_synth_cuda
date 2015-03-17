@@ -4,6 +4,7 @@
 #include "IPlug_include_in_plug_hdr.h"
 #include "Oscillator.h"
 #include "MIDIReceiver.h"
+#include "Envelope.h"
 
 /**
 *	Main synth class. Defines the processing of the plugin/app
@@ -36,7 +37,11 @@ private:
   Oscillator mOscillator;
   MIDIReceiver mMIDIReceiver;
   IControl* mVirtualKeyboard;
+  Envelope mEnvelope;
   void processVirtualKeyboard();
+  // Handle the signals for noteOn and noteOff for the envelopes
+  inline void onNoteOn(const int noteNumber, const int velocity) { mEnvelope.enterStage(Envelope::ENVELOPE_STAGE_ATTACK); };
+  inline void onNoteOff(const int noteNumber, const int velocity) { mEnvelope.enterStage(Envelope::ENVELOPE_STAGE_RELEASE); };
 };
 
 #endif

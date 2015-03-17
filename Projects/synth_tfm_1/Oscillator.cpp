@@ -2,8 +2,9 @@
 
 /**
 *	Setters
-*	TODO
 */
+
+// TODO add description
 
 void Oscillator::set_mode(Oscillator_mode mode) {
 	osc_mode = mode;
@@ -29,8 +30,10 @@ void Oscillator::update_increment(){
 }
 
 /**
-*	TODO
+*	
 */
+
+// TODO add description
 
 double Oscillator::nextSample(){
 	double value = 0.0;
