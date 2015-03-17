@@ -23,11 +23,20 @@ public:
   void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames);
   void ProcessMidiMsg(IMidiMsg* pMsg);
 
+  // things for the UI Keyboard
+  inline int GetNumKeys() const { return mMIDIReceiver.getNumKeys(); };
+  // return true if key is pressed
+  inline bool GetKeyStatus(int key) const { return mMIDIReceiver.getKeyStatus(key); };
+  static const int virtualKeyboardMinimumNoteNumber = 48;
+  int lastVirtualKeyboardNoteNumber;
+
 private:
   double mFrequency;
   void CreatePresets();
   Oscillator mOscillator;
   MIDIReceiver mMIDIReceiver;
+  IControl* mVirtualKeyboard;
+  void processVirtualKeyboard();
 };
 
 #endif
