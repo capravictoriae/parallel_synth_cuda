@@ -6,6 +6,8 @@
 #include "MIDIReceiver.h"
 #include "Envelope.h"
 
+#include <CL\cl.h>
+
 /**
 *	Main synth class. Defines the processing of the plugin/app
 *	stores values for GUI and presets.
@@ -30,6 +32,13 @@ public:
   inline bool GetKeyStatus(int key) const { return mMIDIReceiver.getKeyStatus(key); };
   static const int virtualKeyboardMinimumNoteNumber = 48;
   int lastVirtualKeyboardNoteNumber;
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  // GPU stuff
+  cl_context GPUContext;
+  cl_command_queue cqCommandQueue;
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
 
 private:
   double mFrequency;

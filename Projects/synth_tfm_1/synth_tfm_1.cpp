@@ -6,6 +6,11 @@
 
 #include <algorithm>
 #include <math.h>
+#include <iostream>
+#include <chrono>
+
+#include <omp.h>
+
 
 const int kNumPrograms = 5;
 
@@ -30,6 +35,44 @@ synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo), lastVirtualKeyboardNoteNumber(virtualKeyboardMinimumNoteNumber - 1)
 {
 	TRACE;
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// Init Kernel
+	FILE *fp;
+	char filename[] = "./first_kernel.cl";
+	char *source_str;
+	size_t source_size;
+
+	// Load the source code containing the kernel 
+	fp = fopen(filename, "r");
+	if (!fp){
+		std::cerr << "Failed to load kernel" << std::endl;
+		exit(1);
+	}
+	source_str = (char*)malloc(0x100000);
+	source_size = fread(source_str, 1, 0x100000, fp);
+	fclose(fp);
+
+	//Get an OpenCL platform
+	cl_platform_id cpPlatform;
+	clGetPlatformIDs(1, &cpPlatform, NULL);
+
+	// Get a GPU device
+	cl_device_id cdDevice;
+	clGetDeviceIDs(cpPlatform, CL_DEVICE_TYPE_GPU, 1, &cdDevice, NULL);
+	char cBuffer[1024];
+	clGetDeviceInfo(cdDevice, CL_DEVICE_NAME, sizeof(cBuffer), &cBuffer, NULL);
+	//printf("CL_DEVICE_NAME: %s\n", cBuffer);
+	clGetDeviceInfo(cdDevice, CL_DRIVER_VERSION, sizeof(cBuffer), &cBuffer, NULL);
+	//printf("CL_DRIVER_VERSION: %s\n\n", cBuffer);
+
+	// Create a context to run OpenCL enabled GPU
+	GPUContext = clCreateContextFromType(0, CL_DEVICE_TYPE_GPU, NULL, NULL, NULL);
+
+	// Create a command-queue on the GPU device
+	cqCommandQueue = clCreateCommandQueue(GPUContext, cdDevice, 0, NULL);
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	//pGraphics->AttachPanelBackground(&COLOR_BLACK);
@@ -70,7 +113,10 @@ void synth_tfm_1::CreatePresets() {
 
 void synth_tfm_1::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
 {
-  // Mutex is already locked for us.	
+	// Mutex is already locked for us.
+
+	// Time measure
+	auto begin = omp_get_wtime();
 
 	double *left_output = outputs[0];
 	double *right_output = outputs[1];
@@ -92,6 +138,13 @@ void synth_tfm_1::ProcessDoubleReplacing(double** inputs, double** outputs, int 
 	}
 
 	mMIDIReceiver.Flush(nFrames);
+
+	// time measure
+	auto final_var = omp_get_wtime() - begin;
+	if (final_var > 0){
+		DBGMSG("%f", final_var);
+	}
+
 	
 }
 

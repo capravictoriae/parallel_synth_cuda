@@ -4,11 +4,11 @@
 #include "asio.h"
 #endif
 
-const int kNumIOVSOptions = 11;
-const int kNumSIGVSOptions = 10;
+const int kNumIOVSOptions = 9;
+const int kNumSIGVSOptions = 7;
 
-const std::string kIOVSOptions[kNumIOVSOptions] = {"32", "64", "128", "256", "512", "1024", "2048", "4096", "8192", "16384" , "32768" };
-const std::string kSIGVSOptions[kNumSIGVSOptions] = {"16", "32", "64", "128", "256", "512", "1024" , "2048", "4096" , "8192" };
+const std::string kIOVSOptions[kNumIOVSOptions] = {"32", "64", "128", "256", "512", "1024", "2048", "4096", "8192" };
+const std::string kSIGVSOptions[kNumSIGVSOptions] = {"16", "32", "64", "128", "256", "512", "1024" };
 
 // check the input and output devices, find matching srs
 void PopulateSampleRateList(HWND hwndDlg, RtAudio::DeviceInfo* inputDevInfo, RtAudio::DeviceInfo* outputDevInfo)

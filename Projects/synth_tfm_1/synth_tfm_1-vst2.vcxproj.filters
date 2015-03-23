@@ -54,5 +54,13 @@
     <Filter Include="src">
       <UniqueIdentifier>{1d5b62a2-86a6-4fa3-90b0-c93aff2b33b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cl_kernels">
+      <UniqueIdentifier>{b1769fb9-a604-47fd-9f5b-348c4f7fee74}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="first_kernel.cl">
+      <Filter>cl_kernels</Filter>
+    </None>
   </ItemGroup>
 </Project>
