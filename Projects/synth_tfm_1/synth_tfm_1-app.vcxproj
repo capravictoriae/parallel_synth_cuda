@@ -301,9 +301,6 @@
   <ItemGroup>
     <ResourceCompile Include="synth_tfm_1.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="first_kernel.cl" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

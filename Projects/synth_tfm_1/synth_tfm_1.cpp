@@ -36,44 +36,6 @@ synth_tfm_1::synth_tfm_1(IPlugInstanceInfo instanceInfo)
 {
 	TRACE;
 
-	///////////////////////////////////////////////////////////////////////////////////////////
-	// Init Kernel
-	FILE *fp;
-	char filename[] = "./first_kernel.cl";
-	char *source_str;
-	size_t source_size;
-
-	// Load the source code containing the kernel 
-	fp = fopen(filename, "r");
-	if (!fp){
-		std::cerr << "Failed to load kernel" << std::endl;
-		exit(1);
-	}
-	source_str = (char*)malloc(0x100000);
-	source_size = fread(source_str, 1, 0x100000, fp);
-	fclose(fp);
-
-	//Get an OpenCL platform
-	cl_platform_id cpPlatform;
-	clGetPlatformIDs(1, &cpPlatform, NULL);
-
-	// Get a GPU device
-	cl_device_id cdDevice;
-	clGetDeviceIDs(cpPlatform, CL_DEVICE_TYPE_GPU, 1, &cdDevice, NULL);
-	char cBuffer[1024];
-	clGetDeviceInfo(cdDevice, CL_DEVICE_NAME, sizeof(cBuffer), &cBuffer, NULL);
-	//printf("CL_DEVICE_NAME: %s\n", cBuffer);
-	clGetDeviceInfo(cdDevice, CL_DRIVER_VERSION, sizeof(cBuffer), &cBuffer, NULL);
-	//printf("CL_DRIVER_VERSION: %s\n\n", cBuffer);
-
-	// Create a context to run OpenCL enabled GPU
-	GPUContext = clCreateContextFromType(0, CL_DEVICE_TYPE_GPU, NULL, NULL, NULL);
-
-	// Create a command-queue on the GPU device
-	cqCommandQueue = clCreateCommandQueue(GPUContext, cdDevice, 0, NULL);
-
-	///////////////////////////////////////////////////////////////////////////////////////////
-
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	//pGraphics->AttachPanelBackground(&COLOR_BLACK);
 	pGraphics->AttachBackground(KEYS_BG_ID, KEYS_BG_FN);

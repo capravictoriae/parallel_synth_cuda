@@ -16,9 +16,6 @@
     <Filter Include="headers">
       <UniqueIdentifier>{9fc5cd7a-7766-4a31-8f9f-b79adec86d5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cl_kernels">
-      <UniqueIdentifier>{db87ec73-edf5-4999-a052-882dfcbefa22}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtAudio.h">
@@ -115,10 +112,5 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="synth_tfm_1.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="first_kernel.cl">
-      <Filter>cl_kernels</Filter>
-    </None>
   </ItemGroup>
 </Project>
