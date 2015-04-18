@@ -1,9 +1,25 @@
+// Unique IDs for each image resource.
+#define BG_ID         101
+#define WHITE_KEY_ID  102
+#define BLACK_KEY_ID  103
+#define WAVEFORM_ID   104
+#define KNOB_ID       105
+#define FILTERMODE_ID 106
+
+// Image resource locations for this plug.
+#define BG_FN         "resources/img/bg.png"
+#define WHITE_KEY_FN  "resources/img/whitekey.png"
+#define BLACK_KEY_FN  "resources/img/blackkey.png"
+#define WAVEFORM_FN   "resources/img/waveform.png"
+#define KNOB_FN       "resources/img/knob.png"
+#define FILTERMODE_FN "resources/img/filtermode.png"
+
 #define PLUG_MFR "Placido"
 #define PLUG_NAME "Synth_cuda"
 
 #define PLUG_CLASS_NAME Synthesis
 
-#define BUNDLE_MFR "Placidoe"
+#define BUNDLE_MFR "Placido"
 #define BUNDLE_NAME "Synth_cuda"
 
 #define PLUG_ENTRY Synthesis_Entry
@@ -21,7 +37,7 @@
 
 // http://service.steinberg.de/databases/plugin.nsf/plugIn?openForm
 // 4 chars, single quotes. At least one capital letter
-#define PLUG_UNIQUE_ID 'Ipom'
+#define PLUG_UNIQUE_ID 'Ipik'
 // make sure this is not the same as BUNDLE_MFR
 #define PLUG_MFR_ID 'Acme'
 
@@ -34,7 +50,7 @@
 #endif
 
 #define PLUG_MFR_PT "Placido"
-#define PLUG_NAME_PT "Synthesis\nIPOM"
+#define PLUG_NAME_PT "Synthesis\nIPIK"
 #define PLUG_TYPE_PT "Effect"
 #define PLUG_DOES_AUDIOSUITE 1
 
@@ -72,7 +88,7 @@ instrument determined by PLUG _IS _INST
 
 // GUI default dimensions
 #define GUI_WIDTH 434
-#define GUI_HEIGHT 66
+#define GUI_HEIGHT 296
 
 // on MSVC, you must define SA_API in the resource editor preprocessor macros as well as the c++ ones
 #if defined(SA_API) && !defined(OS_IOS)

@@ -7,7 +7,8 @@ enum OscillatorMode {
     OSCILLATOR_MODE_SINE,
     OSCILLATOR_MODE_SAW,
     OSCILLATOR_MODE_SQUARE,
-    OSCILLATOR_MODE_TRIANGLE
+    OSCILLATOR_MODE_TRIANGLE,
+	kNumOscModes
 };
 
 class Oscillator {
@@ -20,7 +21,7 @@ private:
     double mPhase;
     double mSampleRate;
     double mPhaseIncrement;
-    void updateIncrement();
+	void updateIncrement();
 public:
     void setMode(OscillatorMode mode);
     void setFrequency(double frequency);
@@ -32,7 +33,10 @@ public:
 	double gettwoPI() { return twoPI; };
 	double getSampleRate() { return mSampleRate; };
 	double getmPhase(){ return mPhase; };
-	double nextSample(double phaseIncrement);
+	virtual double nextSample();
+	double pbs(double t);
+	double lastOutput;
+	
     Oscillator() :
 		mOscillatorMode(OSCILLATOR_MODE_SAW),
 		mPI(2*acos(0.0)),
@@ -40,6 +44,7 @@ public:
 		isMuted(true),  
 		mFrequency(440.0),
 		mPhase(0.0),
+		lastOutput(0.0),
 		mSampleRate(44100.0) { 
 			updateIncrement(); 
 		};

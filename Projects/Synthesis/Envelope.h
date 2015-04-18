@@ -17,6 +17,7 @@ public:
 	double nextSample();
 	void setSampleRate(double newSampleRate);
 	inline EnvelopeStage getCurrentStage() const { return currentStage; };
+	void setStageValue(EnvelopeStage stage, double value);
 	const double minimumLevel;
 
 	Envelope() :

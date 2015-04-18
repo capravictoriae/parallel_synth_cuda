@@ -18,7 +18,8 @@ private:
 	Oscillator mOscillator;
 public:
 	double lastPhaseIncrementValue;
-	void Process(double* lbuffer, double* rbuffer, int lastvel, double lastfreq, double mPI, double twoPI, double mSampleRate, Envelope* mEnvelope, OscillatorMode mode);
+	void Process(double* lbuffer, double* rbuffer, int lastvel, double lastfreq, double mPI, double twoPI, double mSampleRate, 
+		Envelope* mEnvelope, Filter* mFilter, OscillatorMode mode);
 	CUDAProcess() :
 		lastPhaseIncrementValue(0.0){
 	};

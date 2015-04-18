@@ -174,37 +174,80 @@ double Oscillator::nextSample() {
 }
 */
 
-double Oscillator::nextSample(double mPhase_processed) {
+double Oscillator::pbs(double t){
+	double dt = mPhaseIncrement / twoPI;
+	// 0 <= t < 1
+	if (t < dt) {
+		t /= dt;
+		return t + t - t*t - 1.0;
+	}
+	// -1 < t < 0
+	else if (t > 1.0 - dt) {
+		t = (t - 1.0) / dt;
+		return t*t + t + t + 1.0;
+	}
+	// 0 otherwise
+	else return 0.0;
+}
+
+double Oscillator::nextSample() {
 	double value = 0.0;
 	if (isMuted) return value;
 
+	double t = mPhase / twoPI;
+
 	switch (mOscillatorMode) {
 	case OSCILLATOR_MODE_SINE:
-		value = sin(mPhase_processed);
+		value = sin(mPhase);
 		break;
 	case OSCILLATOR_MODE_SAW:
-		value = 1.0 - (2.0 * mPhase_processed / twoPI);
+		value = ((2.0 * mPhase / twoPI) - 1.0) - pbs(t);
+		//value = 1.0 - (2.0 * mPhase_processed / twoPI);
 		break;
 	case OSCILLATOR_MODE_SQUARE:
+		if (mPhase <= mPI) {
+			value = 1.0 + pbs(t) - pbs(t);
+		}
+		else {
+			value = -1.0 + pbs(t) - pbs(t);
+		}
+		/*
 		if (mPhase_processed <= mPI) {
 			value = 1.0;
 		}
 		else {
 			value = -1.0;
 		}
+		*/
 		break;
 	case OSCILLATOR_MODE_TRIANGLE:
+
+		if (mPhase <= mPI) {
+			value = 1.0 + pbs(t) - pbs(t);
+		}
+		else {
+			value = -1.0 + pbs(t) - pbs(t);
+		}
+
+		value = mPhaseIncrement * value + (1 - mPhaseIncrement) * lastOutput;
+		// TODO precalculate?
+		// REMOVE triangle calc if gets worse performance
+		lastOutput = value;
+		break;
+
+		/*
 		value = -1.0 + (2.0 * mPhase_processed / twoPI);
 		value = 2.0 * (fabs(value) - 0.5);
 		break;
+		*/
 	}
 
-	/*
+	
 	mPhase += mPhaseIncrement;
 	while (mPhase >= twoPI) {
 		mPhase -= twoPI;
 	}
-	*/
+	
 
 	return value;
 }

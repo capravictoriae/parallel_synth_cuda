@@ -10,6 +10,8 @@
 
 #include "CUDAProcess.h"
 
+#include <vector>
+
 class Synthesis : public IPlug
 {
 public:
@@ -23,6 +25,7 @@ public:
 	void ProcessMidiMsg(IMidiMsg* pMsg);
 
 private:
+	std::vector<double> timer_list;
 	CUDAProcess mCUDA;
 	double mFrequency;
 	void CreatePresets();
