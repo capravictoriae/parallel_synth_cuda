@@ -34,46 +34,46 @@ Synthesis::Synthesis(IPlugInstanceInfo instanceInfo)
 	TRACE;
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
-
+	pGraphics->AttachBackground(BG_ID, BG_FN);
 	// Waveform switch
 	GetParam(mWaveform)->InitEnum("Waveform", OSCILLATOR_MODE_SINE, kNumOscModes);
 	GetParam(mWaveform)->SetDisplayText(0, "Sine"); // Needed for VST3, thanks plunntic
 	IBitmap waveformBitmap = pGraphics->LoadIBitmap(WAVEFORM_ID, WAVEFORM_FN, 4);
-	pGraphics->AttachControl(new ISwitchControl(this, 24, 53, mWaveform, &waveformBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 50, 65, mWaveform, &waveformBitmap));
 
 	// Knob bitmap for ADSR
-	IBitmap knobBitmap = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, 64);
+	IBitmap knobBitmap = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, 128);
 	// Attack knob:
 	GetParam(mAttack)->InitDouble("Attack", 0.01, 0.01, 10.0, 0.001);
 	GetParam(mAttack)->SetShape(3);
-	pGraphics->AttachControl(new IKnobMultiControl(this, 95, 34, mAttack, &knobBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 200, 50, mAttack, &knobBitmap));
 	// Decay knob:
 	GetParam(mDecay)->InitDouble("Decay", 0.5, 0.01, 15.0, 0.001);
 	GetParam(mDecay)->SetShape(3);
-	pGraphics->AttachControl(new IKnobMultiControl(this, 177, 34, mDecay, &knobBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 325, 50, mDecay, &knobBitmap));
 	// Sustain knob:
 	GetParam(mSustain)->InitDouble("Sustain", 0.1, 0.001, 1.0, 0.001);
 	GetParam(mSustain)->SetShape(2);
-	pGraphics->AttachControl(new IKnobMultiControl(this, 259, 34, mSustain, &knobBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 450, 50, mSustain, &knobBitmap));
 	// Release knob:
 	GetParam(mRelease)->InitDouble("Release", 1.0, 0.001, 15.0, 0.001);
 	GetParam(mRelease)->SetShape(3);
-	pGraphics->AttachControl(new IKnobMultiControl(this, 341, 34, mRelease, &knobBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 575, 50, mRelease, &knobBitmap));
 
 	// Filter Switch
 	GetParam(mFilterMode)->InitEnum("Filter Mode", Filter::FILTER_MODE_LOWPASS, Filter::kNumFilterModes);
 	IBitmap filtermodeBitmap = pGraphics->LoadIBitmap(FILTERMODE_ID, FILTERMODE_FN, 3);
-	pGraphics->AttachControl(new ISwitchControl(this, 24, 123, mFilterMode, &filtermodeBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 50, 265, mFilterMode, &filtermodeBitmap));
 
 	// Knobs for filter cutoff and resonance
-	IBitmap smallKnobBitmap = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, 64);
+	IBitmap smallKnobBitmap = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, 128);
 	// Cutoff knob:
 	GetParam(mCutoff)->InitDouble("Cutoff", 0.99, 0.01, 0.99, 0.001);
 	GetParam(mCutoff)->SetShape(2);
-	pGraphics->AttachControl(new IKnobMultiControl(this, 5, 177, mCutoff, &smallKnobBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 300, 250, mCutoff, &smallKnobBitmap));
 	// Resonance knob:
 	GetParam(mResonance)->InitDouble("Resonance", 0.01, 0.01, 1.0, 0.001);
-	pGraphics->AttachControl(new IKnobMultiControl(this, 61, 177, mResonance, &smallKnobBitmap));
+	pGraphics->AttachControl(new IKnobMultiControl(this, 450, 250, mResonance, &smallKnobBitmap));
 
 	AttachGraphics(pGraphics);
 

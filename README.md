@@ -6,12 +6,6 @@ Built using [WDL-OL](https://github.com/olilarkin/wdl-ol)
 
 **TFM - Plácido Fernández**
 
-## TODO
-- [ ] Add instructions to compile
-- [ ] Add GUI
-
-[DOXYGEN](http://www.stack.nl/~dimitri/doxygen/) used for documentation.
-
 WDL-OL uses this other 3rd party libraries
 - [JNetLib](http://www.nullsoft.com/free/jnetlib)
 - [LibPNG](http://www.libpng.org/pub/png)

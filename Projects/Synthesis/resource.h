@@ -10,9 +10,9 @@
 #define BG_FN         "resources/img/bg.png"
 #define WHITE_KEY_FN  "resources/img/whitekey.png"
 #define BLACK_KEY_FN  "resources/img/blackkey.png"
-#define WAVEFORM_FN   "resources/img/waveform.png"
-#define KNOB_FN       "resources/img/knob.png"
-#define FILTERMODE_FN "resources/img/filtermode.png"
+#define WAVEFORM_FN   "resources/img/knob_70_white_4.png"
+#define KNOB_FN       "resources/img/Vintage.png"
+#define FILTERMODE_FN "resources/img/knob_70_white_3.png"
 
 #define PLUG_MFR "Placido"
 #define PLUG_NAME "Synth_cuda"
@@ -87,8 +87,8 @@ instrument determined by PLUG _IS _INST
 //#define BLACK_KEY_FN  "resources/img/blackkey.png"
 
 // GUI default dimensions
-#define GUI_WIDTH 434
-#define GUI_HEIGHT 296
+#define GUI_WIDTH 750
+#define GUI_HEIGHT 450
 
 // on MSVC, you must define SA_API in the resource editor preprocessor macros as well as the c++ ones
 #if defined(SA_API) && !defined(OS_IOS)
