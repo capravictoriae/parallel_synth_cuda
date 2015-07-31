@@ -1,10 +1,10 @@
-# Parallel Synth
+# Simple Synthesizer that uses CUDA to process.
 
-Synth emulation using standard modern C++. Performance increased using CUDA.
+Synth emulation of simple analog monofonic synthesizer using standard modern C++ and CUDA to increase it's performance.
 
 Built using [WDL-OL](https://github.com/olilarkin/wdl-ol)
 
-**TFM - Plácido Fernández**
+**TFM - Plácido Fernández - Universidad Carlos III de Madrid**
 
 WDL-OL uses this other 3rd party libraries
 - [JNetLib](http://www.nullsoft.com/free/jnetlib)
